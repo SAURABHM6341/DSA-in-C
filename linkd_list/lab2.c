@@ -1,0 +1,133 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node
+{
+    int data;
+    struct node *next;
+    struct node *previous;
+};
+struct node *printdll(struct node *ptr)
+{
+    while (ptr != NULL)
+    {
+        printf("element : %d\n", ptr->data);
+        ptr = ptr->next;
+    }
+}
+struct node *createdll(struct node *head)
+{
+    struct node *temp = head;
+    struct node *newnode = (struct node *)malloc(sizeof(struct node));
+    printf("enter the data of element \n");
+    scanf("%d", &newnode->data);
+    newnode->next = NULL;
+    while (temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+    newnode->previous = temp;
+    temp->next = newnode;
+}
+struct node *inseratbeg(struct node *head)
+{
+    struct node *temp = head;
+    struct node *newnode = (struct node *)malloc(sizeof(struct node));
+    printf("enter the data of the new element that is being inserted at begining\n");
+    scanf("\n%d", &newnode->data);
+    newnode->next = temp;
+    newnode->previous = NULL;
+    temp->previous = newnode;
+    head = newnode;
+    return head;
+}
+struct node *insertatend(struct node *head)
+{
+    struct node *newnode1 = (struct node *)malloc(sizeof(struct node));
+    struct node *temp = head;
+    while (temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+
+    printf("Enter the data of the new element that is being inserted at end of list :\n");
+    scanf("%d", &newnode1->data);
+    newnode1->next = NULL;
+    newnode1->previous = temp;
+    temp->next = newnode1;
+    return head;
+}
+struct node *insertatpos(struct node *head)
+{
+    struct node *temp = head;
+    struct node *newnode = (struct node *)malloc(sizeof(struct node));
+    int pos, i = 1;
+    printf("enter the node position where you want to insert the new node\n");
+    scanf("%d", &pos);
+    printf("enter the data of the new node\n");
+    scanf("%d", &newnode->data);
+    while (i < pos - 1)
+    {
+        temp = temp->next;
+        i++;
+    }
+    i = 1;
+    struct node *temp1 = head;
+    while (i < pos)
+    {
+        temp1 = temp1->next;
+        i++;
+    }
+    newnode->previous = temp;
+    newnode->next = temp1;
+    temp->next = newnode;
+    temp1->previous = newnode;
+
+    return head;
+}
+struct node *insertafterpos(struct node *head)
+{
+    struct node *temp = head;
+    struct node *newnode = (struct node *)malloc(sizeof(struct node));
+    int pos, i = 1;
+    printf("enter the node position after which you want to insert the new node\n");
+    scanf("%d", &pos);
+    printf("enter the data of the new node\n");
+    scanf("%d", &newnode->data);
+    while (i < pos)
+    {
+        temp = temp->next;
+        i++;
+    }
+    i = 1;
+    struct node *temp1 = head;
+    while (i < pos+1)
+    {
+        temp1 = temp1->next;
+        i++;
+    }
+    newnode->previous = temp;
+    newnode->next = temp1;
+    temp->next = newnode;
+    temp1->previous = newnode;
+
+    return head;
+}
+int main()
+{
+    struct node *head = (struct node *)malloc(sizeof(struct node));
+    printf("enter the data of 1st node\n");
+    scanf("%d", &head->data);
+    head->previous = NULL;
+    head->next = NULL;
+    createdll(head);
+    printdll(head);
+    head = inseratbeg(head);
+    printdll(head);
+    head = insertatend(head);
+    printdll(head);
+    head = insertatpos(head);
+    printdll(head);
+    head = insertafterpos(head);
+    printdll(head);
+    return 0;
+}
